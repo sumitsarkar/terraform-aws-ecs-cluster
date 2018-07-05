@@ -10,7 +10,7 @@ resource "random_id" "server" {
 }
 
 data "template_file" "container_instance_cloud_config" {
-  template = "${file("cloud-config/ecs_cluster_init.cfg")}"
+  template = "${file("${path.module}/cloud-config/ecs_cluster_init.cfg")}"
 
   vars {
     aws_region  = "${var.region}"
@@ -20,7 +20,7 @@ data "template_file" "container_instance_cloud_config" {
 }
 
 data "template_file" "instance_role_policy" {
-  template = "${file("roles/instance_role_policy.tpl")}"
+  template = "${file("${path.module}/roles/instance_role_policy.tpl")}"
 
   vars {
     account_id              = "${data.aws_caller_identity.current.account_id}"
