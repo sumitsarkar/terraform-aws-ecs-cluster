@@ -32,7 +32,7 @@ data "template_file" "instance_role_policy" {
 }
 
 module "container_service_cluster" {
-  source = "git::https://github.com/sumitsarkar/terraform-aws-ecs-cluster-multi-instance?ref=1.2.0"
+  source = "git::https://github.com/sumitsarkar/terraform-aws-ecs-cluster-multi-instance?ref=1.2.1"
 
   vpc_id               = "${var.vpc_id}"
   region               = "${var.region}"
