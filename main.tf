@@ -26,27 +26,42 @@ data "template_file" "instance_role_policy" {
     account_id              = "${data.aws_caller_identity.current.account_id}"
     region                  = "${var.region}"
     stack_name              = "${var.stack_name}"
-    instance_log_group_name = "${var.stack_name}"
+    instance_log_group_name = "${aws_cloudwatch_log_group.cluster_log_group.name}"
     ecs_cluster             = "ecs${title(var.stack_name)}Cluster"
   }
 }
 
 module "container_service_cluster" {
-  source = "git::https://github.com/azavea/terraform-aws-ecs-cluster?ref=1.1.0"
+  source = "git::https://github.com/sumitsarkar/terraform-aws-ecs-cluster-multi-instance?ref=1.2.0"
 
   vpc_id               = "${var.vpc_id}"
+  region               = "${var.region}"
   ami_id               = "${var.ami_id}"
-  instance_type        = "${var.instance_type}"
+  instance_types       = "${var.instance_types}"
   key_name             = "${var.ssh_key_name}"
   cloud_config_content = "${data.template_file.container_instance_cloud_config.rendered}"
 
-  root_block_device_type = "gp2"
+  root_block_device_type = "${var.root_block_device_type}"
   root_block_device_size = "${var.root_block_size}"
 
-  health_check_grace_period = "300"
-  desired_capacity          = "${var.desired_size}"
-  min_size                  = "${var.min_size}"
-  max_size                  = "${var.max_size}"
+  health_check_grace_period      = "300"
+  desired_capacity               = "${var.desired_size}"
+  min_size                       = "${var.min_size}"
+  max_size                       = "${var.max_size}"
+  scale_up_cooldown_seconds      = "${var.scale_up_cooldown_seconds}"
+  scale_down_cooldown_seconds    = "${var.scale_down_cooldown_seconds}"
+  high_cpu_evaluation_periods    = "${var.high_cpu_evaluation_periods}"
+  high_cpu_period_seconds        = "${var.high_cpu_period_seconds}"
+  high_cpu_threshold_percent     = "${var.high_cpu_threshold_percent}"
+  low_cpu_evaluation_periods     = "${var.low_cpu_evaluation_periods}"
+  low_cpu_period_seconds         = "${var.low_cpu_period_seconds}"
+  low_cpu_threshold_percent      = "${var.low_cpu_threshold_percent}"
+  high_memory_evaluation_periods = "${var.high_memory_evaluation_periods}"
+  high_memory_period_seconds     = "${var.high_memory_period_seconds}"
+  high_memory_threshold_percent  = "${var.high_memory_threshold_percent}"
+  low_memory_evaluation_periods  = "${var.low_memory_evaluation_periods}"
+  low_memory_period_seconds      = "${var.low_memory_period_seconds}"
+  low_memory_threshold_percent   = "${var.low_memory_threshold_percent}"
 
   enabled_metrics = [
     "GroupMinSize",
@@ -80,14 +95,4 @@ resource "aws_cloudwatch_log_group" "cluster_log_group" {
 resource "aws_iam_role_policy" "ecs_create_logs_policy" {
   policy = "${data.template_file.instance_role_policy.rendered}"
   role   = "${module.container_service_cluster.container_instance_ecs_for_ec2_service_role_name}"
-}
-
-# EC2 to Internet
-resource "aws_security_group_rule" "ec2_to_internet_egress" {
-  type              = "egress"
-  from_port         = 0
-  to_port           = 65535
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = "${module.container_service_cluster.container_instance_security_group_id}"
 }

@@ -10,11 +10,11 @@ output "cluster_instance_security_group_id" {
   value = "${module.container_service_cluster.container_instance_security_group_id}"
 }
 
-output "ecs_autoscale_role_name" {
-  value = "${module.container_service_cluster.ecs_autoscale_role_name}"
+output "ecs_service_role_name" {
+  value = "${module.container_service_cluster.ecs_service_role_name}"
 }
-output "ecs_autoscale_role_arn" {
-  value = "${module.container_service_cluster.ecs_autoscale_role_arn}"
+output "ecs_service_role_arn" {
+  value = "${module.container_service_cluster.ecs_service_role_arn}"
 }
 
 output "container_instance_autoscaling_group_name" {

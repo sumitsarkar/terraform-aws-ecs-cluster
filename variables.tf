@@ -28,7 +28,8 @@ variable "ami_id" {
   description = "AMI ID. Should be available in the specific region."
 }
 
-variable "instance_type" {
+variable "instance_types" {
+  type        = "list"
   description = "Type of the instance for the cluster."
 }
 
@@ -36,24 +37,100 @@ variable "ssh_key_name" {
   description = "SSH Key name. It must exist in the VPC and region."
 }
 
+variable "root_block_device_type" {
+  type        = "list"
+  description = "Type of the disk attached to the EC2 instances in the cluster.Can be gp2, io, standard"
+}
+
 variable "root_block_size" {
-  default     = "40"
+  type        = "list"
   description = "Size of the disk attached to the EC2 instances in the cluster."
 }
 
+## Scaling Configurations
 variable "desired_size" {
-  default     = 2
+  type        = "list"
   description = "Desired size of the cluster."
 }
 
 variable "min_size" {
-  default     = 1
+  type        = "list"
   description = "Minimum size of the cluster."
 }
 
 variable "max_size" {
-  default     = 3
+  type        = "list"
   description = "Maximum size of the cluster."
+}
+
+variable "scale_up_cooldown_seconds" {
+  type        = "list"
+  description = "List for Number of seconds before allowing another scale up activity"
+}
+
+variable "scale_down_cooldown_seconds" {
+  type        = "list"
+  description = "List for Number of seconds before allowing another scale down activity"
+}
+
+variable "high_cpu_evaluation_periods" {
+  type        = "list"
+  description = "List for Number of evaluation periods for high CPU alarm"
+}
+
+variable "high_cpu_period_seconds" {
+  type        = "list"
+  description = "List for Number of seconds in an evaluation period for high CPU alarm"
+}
+
+variable "high_cpu_threshold_percent" {
+  type        = "list"
+  description = "Threshold as a percentage for high CPU alarm"
+}
+
+variable "low_cpu_evaluation_periods" {
+  type        = "list"
+  description = "List for Number of evaluation periods for low CPU alarm "
+}
+
+variable "low_cpu_period_seconds" {
+  type        = "list"
+  description = "List for Number of seconds in an evaluation period for low CPU alarm"
+}
+
+variable "low_cpu_threshold_percent" {
+  type        = "list"
+  description = "List for Threshold as a percentage for low CPU alarm"
+}
+
+variable "high_memory_evaluation_periods" {
+  type        = "list"
+  description = "List for Number of evaluation periods for high memory alarm"
+}
+
+variable "high_memory_period_seconds" {
+  type        = "list"
+  description = "List for Number of seconds in an evaluation period for high memory alarm"
+}
+
+variable "high_memory_threshold_percent" {
+  type        = "list"
+  description = "List for Threshold as a percentage for high memory alarm"
+}
+
+variable "low_memory_evaluation_periods" {
+  type        = "list"
+  description = "List for Number of evaluation periods for low memory alarm"
+}
+
+variable "low_memory_period_seconds" {
+  type        = "list"
+  description = "List for Number of seconds in an evaluation period for low memory alarm"
+}
+
+variable "low_memory_threshold_percent" {
+  type        = "list"
+  description = "List for Threshold as a percentage for low memory alarm"
 }
 
 # ALB Configurations
