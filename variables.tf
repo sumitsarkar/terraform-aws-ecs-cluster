@@ -63,6 +63,12 @@ variable "max_size" {
   description = "Maximum size of the cluster."
 }
 
+variable "spot_enabled" {
+  default = "false"
+  type = "string"
+  description = "Adds the spot-enabled tag to the ASG of the instances."
+}
+
 variable "scale_up_cooldown_seconds" {
   type        = "list"
   description = "List for Number of seconds before allowing another scale up activity"

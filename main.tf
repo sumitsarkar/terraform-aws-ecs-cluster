@@ -78,6 +78,8 @@ module "container_service_cluster" {
 
   project     = "Backbone"
   environment = "${var.stack_name}"
+
+  spot_enabled = "${var.spot_enabled}"
 }
 
 ## AWS cloud watch log group
