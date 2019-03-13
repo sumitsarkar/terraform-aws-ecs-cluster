@@ -24,7 +24,7 @@ variable "environment" {
 }
 
 variable "ami_id" {
-  default     = "ami-c91624b0"
+  default     = "ami-0b8e62ddc09226d0a"
   description = "AMI ID. Should be available in the specific region."
 }
 
@@ -67,6 +67,18 @@ variable "spot_enabled" {
   default = "false"
   type = "string"
   description = "Adds the spot-enabled tag to the ASG of the instances."
+}
+
+variable "enable_newrelic" {
+  default = "false"
+  type = "string"
+  description = "Enabled New Relic Infrastructure monitoring. WARNING: This supports Amazon Linux 2 only"
+}
+
+variable "newrelic_key" {
+  default = ""
+  type = "string"
+  description = "New Relic License key to enable monitoring. WARNING: This supports Amazon Linux 2 only"
 }
 
 variable "scale_up_cooldown_seconds" {

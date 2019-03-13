@@ -16,6 +16,8 @@ data "template_file" "container_instance_cloud_config" {
     aws_region  = "${var.region}"
     stack_name  = "${var.stack_name}"
     ecs_cluster = "ecs${title(var.stack_name)}Cluster"
+    enable_newrelic = "${var.enable_newrelic}"
+    newrelic_key = "${var.newrelic_key}"
   }
 }
 
