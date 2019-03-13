@@ -18,6 +18,8 @@ data "template_file" "container_instance_cloud_config" {
     ecs_cluster = "ecs${title(var.stack_name)}Cluster"
     enable_newrelic = "${var.enable_newrelic}"
     newrelic_key = "${var.newrelic_key}"
+    environment  = "${var.stack_name}"
+    team_name = "${var.newrelic_team_name}"
   }
 }
 

@@ -81,6 +81,11 @@ variable "newrelic_key" {
   description = "New Relic License key to enable monitoring. WARNING: This supports Amazon Linux 2 only"
 }
 
+variable "newrelic_team_name" {
+  default = ""
+  description = "This is a custom attribute for newrelic infrastructure agent"
+}
+
 variable "scale_up_cooldown_seconds" {
   type        = "list"
   description = "List for Number of seconds before allowing another scale up activity"
