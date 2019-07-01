@@ -7,11 +7,11 @@ variable "vpc_id" {
 }
 
 variable "private_subnet_ids" {
-  type = "list"
+  type = list(string)
 }
 
 variable "public_subnet_ids" {
-  type = "list"
+  type = list(string)
 }
 
 variable "stack_name" {
@@ -29,7 +29,7 @@ variable "ami_id" {
 }
 
 variable "instance_types" {
-  type        = "list"
+  type        = list(string)
   description = "Type of the instance for the cluster."
 }
 
@@ -38,121 +38,121 @@ variable "ssh_key_name" {
 }
 
 variable "root_block_device_type" {
-  type        = "list"
+  type        = list(string)
   description = "Type of the disk attached to the EC2 instances in the cluster.Can be gp2, io, standard"
 }
 
 variable "root_block_size" {
-  type        = "list"
+  type        = list(string)
   description = "Size of the disk attached to the EC2 instances in the cluster."
 }
 
 ## Scaling Configurations
 variable "desired_size" {
-  type        = "list"
+  type        = list(string)
   description = "Desired size of the cluster."
 }
 
 variable "min_size" {
-  type        = "list"
+  type        = list(string)
   description = "Minimum size of the cluster."
 }
 
 variable "max_size" {
-  type        = "list"
+  type        = list(string)
   description = "Maximum size of the cluster."
 }
 
 variable "spot_enabled" {
-  default = "false"
-  type = "string"
+  default     = "false"
+  type        = string
   description = "Adds the spot-enabled tag to the ASG of the instances."
 }
 
 variable "enable_newrelic" {
-  default = "false"
-  type = "string"
+  default     = "false"
+  type        = string
   description = "Enabled New Relic Infrastructure monitoring. WARNING: This supports Amazon Linux 2 only"
 }
 
 variable "newrelic_key" {
-  default = ""
-  type = "string"
+  default     = ""
+  type        = string
   description = "New Relic License key to enable monitoring. WARNING: This supports Amazon Linux 2 only"
 }
 
 variable "newrelic_team_name" {
-  default = ""
+  default     = ""
   description = "This is a custom attribute for newrelic infrastructure agent"
 }
 
 variable "scale_up_cooldown_seconds" {
-  type        = "list"
+  type        = list(string)
   description = "List for Number of seconds before allowing another scale up activity"
 }
 
 variable "scale_down_cooldown_seconds" {
-  type        = "list"
+  type        = list(string)
   description = "List for Number of seconds before allowing another scale down activity"
 }
 
 variable "high_cpu_evaluation_periods" {
-  type        = "list"
+  type        = list(string)
   description = "List for Number of evaluation periods for high CPU alarm"
 }
 
 variable "high_cpu_period_seconds" {
-  type        = "list"
+  type        = list(string)
   description = "List for Number of seconds in an evaluation period for high CPU alarm"
 }
 
 variable "high_cpu_threshold_percent" {
-  type        = "list"
+  type        = list(string)
   description = "Threshold as a percentage for high CPU alarm"
 }
 
 variable "low_cpu_evaluation_periods" {
-  type        = "list"
+  type        = list(string)
   description = "List for Number of evaluation periods for low CPU alarm "
 }
 
 variable "low_cpu_period_seconds" {
-  type        = "list"
+  type        = list(string)
   description = "List for Number of seconds in an evaluation period for low CPU alarm"
 }
 
 variable "low_cpu_threshold_percent" {
-  type        = "list"
+  type        = list(string)
   description = "List for Threshold as a percentage for low CPU alarm"
 }
 
 variable "high_memory_evaluation_periods" {
-  type        = "list"
+  type        = list(string)
   description = "List for Number of evaluation periods for high memory alarm"
 }
 
 variable "high_memory_period_seconds" {
-  type        = "list"
+  type        = list(string)
   description = "List for Number of seconds in an evaluation period for high memory alarm"
 }
 
 variable "high_memory_threshold_percent" {
-  type        = "list"
+  type        = list(string)
   description = "List for Threshold as a percentage for high memory alarm"
 }
 
 variable "low_memory_evaluation_periods" {
-  type        = "list"
+  type        = list(string)
   description = "List for Number of evaluation periods for low memory alarm"
 }
 
 variable "low_memory_period_seconds" {
-  type        = "list"
+  type        = list(string)
   description = "List for Number of seconds in an evaluation period for low memory alarm"
 }
 
 variable "low_memory_threshold_percent" {
-  type        = "list"
+  type        = list(string)
   description = "List for Threshold as a percentage for low memory alarm"
 }
 
@@ -206,3 +206,4 @@ variable "internal_route53_record" {
 variable "internal_alb_zone_id" {
   description = "Route53 Zone ID for the Internal Route53 Record."
 }
+

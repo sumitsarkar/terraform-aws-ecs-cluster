@@ -1,4 +1,5 @@
-data "aws_elb_hosted_zone_id" "main" {}
+data "aws_elb_hosted_zone_id" "main" {
+}
 
 data "aws_iam_policy_document" "bucket_policy" {
   statement {
@@ -23,13 +24,13 @@ data "aws_iam_policy_document" "bucket_policy" {
 }
 
 resource "aws_s3_bucket" "log_bucket" {
-  bucket        = "${var.alb_log_bucket}"
-  policy        = "${data.aws_iam_policy_document.bucket_policy.json}"
+  bucket        = var.alb_log_bucket
+  policy        = data.aws_iam_policy_document.bucket_policy.json
   force_destroy = true
 
   tags = {
-    "environment" = "${var.environment}"
-    "stack-name"  = "${var.stack_name}"
+    "environment" = var.environment
+    "stack-name"  = var.stack_name
     "stack-type"  = "ecs-cluster-alb-access-logs"
   }
 
@@ -47,7 +48,7 @@ resource "aws_s3_bucket" "log_bucket" {
 resource "aws_security_group" "alb_security_group" {
   name        = "${var.stack_name}-alb-sg-${random_id.server.hex}"
   description = "ALB Security Group"
-  vpc_id      = "${var.vpc_id}"
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port = 80
@@ -69,10 +70,10 @@ resource "aws_security_group" "alb_security_group" {
     ]
   }
 
-  tags {
+  tags = {
     "stack-type"  = "alb"
-    "environment" = "${var.environment}"
-    "stack-name"  = "${var.stack_name}"
+    "environment" = var.environment
+    "stack-name"  = var.stack_name
   }
 }
 
@@ -81,8 +82,8 @@ resource "aws_security_group_rule" "host_to_alb_ingress" {
   from_port                = 0
   to_port                  = 65535
   protocol                 = "tcp"
-  security_group_id        = "${aws_security_group.alb_security_group.id}"
-  source_security_group_id = "${module.container_service_cluster.container_instance_security_group_id}"
+  security_group_id        = aws_security_group.alb_security_group.id
+  source_security_group_id = module.container_service_cluster.container_instance_security_group_id
 }
 
 resource "aws_security_group_rule" "alb_to_host_ingress" {
@@ -90,8 +91,8 @@ resource "aws_security_group_rule" "alb_to_host_ingress" {
   from_port                = 0
   to_port                  = 65535
   protocol                 = "-1"
-  security_group_id        = "${module.container_service_cluster.container_instance_security_group_id}"
-  source_security_group_id = "${aws_security_group.alb_security_group.id}"
+  security_group_id        = module.container_service_cluster.container_instance_security_group_id
+  source_security_group_id = aws_security_group.alb_security_group.id
 }
 
 # ALB to Internet
@@ -105,5 +106,6 @@ resource "aws_security_group_rule" "alb_to_internet_egress" {
     "0.0.0.0/0",
   ]
 
-  security_group_id = "${aws_security_group.alb_security_group.id}"
+  security_group_id = aws_security_group.alb_security_group.id
 }
+
