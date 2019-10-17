@@ -23,6 +23,8 @@ data "template_file" "container_instance_cloud_config" {
     newrelic_key    = var.newrelic_key
     environment     = var.stack_name
     team_name       = var.newrelic_team_name
+    enable_crowdstrike = var.enable_crowdstrike
+    crowdstrike_cid = var.crowdstrike_cid
   }
 }
 
